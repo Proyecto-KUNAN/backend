@@ -25,79 +25,79 @@ export default function index() {
         </div>
       </div>
 
-      <div className='container  border border-success border-3 bg-light '>
+      <div className='container border border-success border-3 bg-light '>
         <div className=' p-3 row justify-content-center'>
           <div className='col-6  '>
-            <label htmlFor='nombre'>NOMBRE</label>
-            <input type='text' className='form-control' id='nombre' placeholder='INGRESE SU NOMBRE' aria-label='First name' />
+            <label htmlFor='nombre'>Nombre:</label>
+            <input type='text' className='form-control' id='nombre' placeholder='Ingrese su nombre' aria-label='Ingrese su nombre' />
           </div>
         </div>
         <div className='p-3 row justify-content-center'>
           <div className='col-6'>
-            <label htmlFor='apellido'>APELLIDO</label>
-            <input type='text' className='form-control' id='apellido' placeholder='INGRESE SU APELLIDO' aria-label='First name' />
+            <label htmlFor='apellido'>Apellido:</label>
+            <input type='text' className='form-control' id='apellido' placeholder='Ingrese su apellido' aria-label='Ingrese su apellido' />
           </div>
         </div>
         <div className='p-3 row justify-content-center'>
           <div className='col-6'>
-            <label htmlFor='telefono'>TELEFONO</label>
-            <input type='text' className='form-control' id='telefono' placeholder='INGRESE SU TELEFONO' aria-label='First name' />
+            <label htmlFor='telefono'>Telefono:</label>
+            <input type='text' className='form-control' id='telefono' placeholder='Ingrese un telefono' aria-label='Ingrese un telefono' />
           </div>
         </div>
         <div className='form-group p-3 row justify-content-center'>
           <div className='col-6'>
-            <label htmlFor='exampleInputEmail1'>EMAIL</label>
-            <input type='email' className='form-control' id='exampleInputEmail1' aria-describedby='emailHelp' placeholder='INGRESE SU EMAIL' />
+            <label htmlFor='exampleInputEmail1'>Email</label>
+            <input type='email' className='form-control' id='exampleInputEmail1' aria-describedby='emailHelp' placeholder='Ingrese un email' />
             <small id='emailHelp' className='form-text text-muted'>
-              {"We'll never share your email with anyone else."}
+              {'Nunca compartiremos su email'}
             </small>
           </div>
         </div>
         <div className='p-3 row justify-content-center'>
           <div className='col-6'>
-            <label htmlFor='sitioweb'>SITIO WEB</label>
-            <input type='text' className='form-control' id='sitioweb' placeholder='INGRESE SU SITIO WEB' aria-label='First name' />
+            <label htmlFor='web'>Sitio Web</label>
+            <input type='text' className='form-control' id='web' placeholder='Ingrese su sitio web' aria-label='First name' />
           </div>
         </div>
         <div className=' p-3 row justify-content-center '>
           <div className='col-6'>
-            <label htmlFor='industria'>INDUSTRIA A LA QUE PERTENECE </label>
+            <label htmlFor='industria'>¿A que industria pertenece?</label>
             <select className='form-select form-select-xl' aria-label='Default select example'>
-              <option value='1'>One</option>
-              <option value='2'>Two</option>
-              <option value='3'>otro..</option>
+              <option value='1'>Agro</option>
+              <option value='2'>Tecnologia</option>
+              <option value='3'>Otra</option>
             </select>
           </div>
         </div>
-        <div className='  row justify-content-center '>
+        <div className='row justify-content-center'>
           <label className=' p-3 col-6' htmlFor='check'>
-            TRABAJA CON VENTA INDIRECTA{' '}
+            ¿Trabaja con venta indirecta?{' '}
           </label>
           <div className='form-check m-2 col-6'>
-            <input className='form-check-input m-2 ' type='radio' name='flexRadioDefault' id='flexRadioDefault1' />
+            <input className='form-check-input mx-2 ' type='radio' name='flexRadioDefault' id='flexRadioDefault1' />
             <label className='form-check-label  ' htmlFor='flexRadioDefault1'>
-              SI
+              Si
             </label>
           </div>
           <div className='form-check m-2 col-6'>
-            <input className='form-check-input m-2 ' type='radio' name='flexRadioDefault' id='flexRadioDefault2' defaultChecked='true' />
+            <input className='form-check-input mx-2 ' type='radio' name='flexRadioDefault' id='flexRadioDefault2' defaultChecked='true' />
             <label className='form-check-label ' htmlFor='flexRadioDefault2'>
-              NO
+              No
             </label>
           </div>
         </div>
         <div className='  row justify-content-center '>
           <div className='col-6'>
             <label htmlFor='exampleFormControlTextarea1' className='form-label'>
-              CONSULTA
+              Consulta
             </label>
-            <textarea className='form-control' id='exampleFormControlTextarea1' rows='3'></textarea>
+            <textarea className='form-control' id='exampleFormControlTextarea1' rows='3' placeholder='Escriba su consulta aqui ...'></textarea>
           </div>
         </div>
         <div className='row justify-content-center'>
           <div className='col-6'>
             <button type='submit' className='btn btn-primary m-2'>
-              ENVIAR
+              Enviar
             </button>
           </div>
         </div>
