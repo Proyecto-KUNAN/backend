@@ -22,18 +22,13 @@ export default function Index() {
   const webValid = useValidation(web, /^[a-zA-Z0-9\_\-]+\.[a-zA-Z-.]+$/);
   const consultaValid = useValidation(consulta, /^.[^\{\}\<\>\[\]\"\`]{0,400}$/);
 
-  const [finalData, setFinalData] = useState({});
-
-  const { insert } = usePotentialClient(finalData);
+  const { insert } = usePotentialClient();
 
   const handlerSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      console.log(name, lastName, email, phone, web, consulta);
-      console.log(nameValid, lastNameValid, emailValid, phoneValid, webValid, consultaValid);
       if (!nameValid || !lastNameValid || !emailValid || !phoneValid || !webValid || !consultaValid) return;
-      console.log('Pass verification');
-      setFinalData({
+      insert({
         name,
         email,
         lastName,
@@ -41,7 +36,6 @@ export default function Index() {
         web,
         consulta,
       });
-      insert();
     },
     [consulta, consultaValid, email, emailValid, insert, lastName, lastNameValid, name, nameValid, phone, phoneValid, web, webValid]
   );
@@ -72,27 +66,43 @@ export default function Index() {
         <div className='row justify-content-center m-0 p-0'>
           <div className='col-6  '>
             <label htmlFor='nombre'>Nombre:</label>
-            <input type='text' className='form-control' id='nombre' placeholder='Ingrese su nombre' aria-label='Ingrese su nombre' onChange={(e) => setName(e.target.value)} />
+            <input type='text' className={`form-control ${nameValid ? 'is-valid' : 'is-invalid'}`} id='nombre' placeholder='Ingrese su nombre' aria-label='Ingrese su nombre' onChange={(e) => setName(e.target.value)} />
+            <div className='valid-feedback'>Correcto!</div>
+            <div className='invalid-feedback'>Ingrese su Nombre!</div>
           </div>
+
           <div className='col-6'>
             <label htmlFor='apellido'>Apellido:</label>
-            <input type='text' className='form-control' id='apellido' placeholder='Ingrese su apellido' aria-label='Ingrese su apellido' onChange={(e) => setLastName(e.target.value)} />
+            <input type='text' className={`form-control ${lastNameValid ? 'is-valid' : 'is-invalid'}`} id='apellido' placeholder='Ingrese su apellido' aria-label='Ingrese su apellido' onChange={(e) => setLastName(e.target.value)} />
+
+            <div className='valid-feedback'>Correcto!</div>
+            <div className='invalid-feedback'>Ingrese su Apellido!</div>
           </div>
         </div>
         <div className='row justify-content-center m-0 p-0'>
           <div className='col-6'>
             <label htmlFor='telefono'>Telefono:</label>
-            <input type='text' className='form-control' id='telefono' placeholder='Ingrese un telefono' aria-label='Ingrese un telefono' onChange={(e) => setPhone(e.target.value)} />
+            <input type='text' className={`form-control ${phoneValid ? 'is-valid' : 'is-invalid'}`} id='telefono' placeholder='Ingrese un telefono' aria-label='Ingrese un telefono' onChange={(e) => setPhone(e.target.value)} />
+
+            <div className='valid-feedback'>Telefono Correcto!</div>
+            <div className='invalid-feedback'>Ingrese un numero de telefono, sin simbolos!</div>
           </div>
+
           <div className='form-group col-6 justify-content-center'>
             <label htmlFor='exampleInputEmail1'>Email</label>
-            <input type='email' className='form-control' id='exampleInputEmail1' aria-describedby='emailHelp' placeholder='Ingrese un email' onChange={(e) => setEmail(e.target.value)} />
+            <input type='email' className={`form-control ${emailValid ? 'is-valid' : 'is-invalid'}`} aria-describedby='emailHelp' placeholder='Ingrese un email' onChange={(e) => setEmail(e.target.value)} />
+
+            <div className='valid-feedback'>Email correcto!</div>
+            <div className='invalid-feedback'>Ingrese una direccion de Email valido !</div>
           </div>
         </div>
         <div className='row justify-content-center m-0 p-0'>
           <div className='col-6'>
             <label htmlFor='web'>Sitio Web</label>
-            <input type='text' className='form-control' id='web' placeholder='Ingrese su sitio web' aria-label='First name' onChange={(e) => setWeb(e.target.value)} />
+            <input type='text' className={`form-control ${webValid ? 'is-valid' : 'is-invalid'}`} id='web' placeholder='Ingrese su sitio web' aria-label='First name' onChange={(e) => setWeb(e.target.value)} />
+
+            <div className='valid-feedback'>Correcto!</div>
+            <div className='invalid-feedback'>Ingrese un sitio web valido!</div>
           </div>
           <div className='col-6'>
             <label htmlFor='industria'>¿A que industria pertenece?</label>
@@ -116,7 +126,10 @@ export default function Index() {
             <label htmlFor='exampleFormControlTextarea1' className='form-label'>
               Consulta
             </label>
-            <textarea className='form-control' id='exampleFormControlTextarea1' rows='3' placeholder='Escriba su consulta aqui ...' onChange={(e) => setConsulta(e.target.value)}></textarea>
+            <textarea className={`form-control ${consultaValid ? 'is-valid' : 'is-invalid'}`} id='exampleFormControlTextarea1' rows='3' placeholder='Escriba su consulta aqui ...' onChange={(e) => setConsulta(e.target.value)}></textarea>
+
+            <div className='valid-feedback'>Correcto!</div>
+            <div className='invalid-feedback'>Ingrese una consulta</div>
           </div>
         </div>
         <div className='row justify-content-center m-0 p-1'>
