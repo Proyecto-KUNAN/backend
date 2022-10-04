@@ -4,6 +4,10 @@ import React, { useCallback, useState } from 'react';
 import useValidation from '../hooks/useValidation';
 import { useAPISession } from '../hooks/useAPISession';
 import { usePotentialClient } from '../hooks/usePotentialClient';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit } from '@fortawesome/free-regular-svg-icons';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
 
 export default function Index() {
   const [name, setName] = useState('');
@@ -14,6 +18,10 @@ export default function Index() {
   const [industry, setIndustry] = useState('');
   const [ventaIndirencta, setVentaIndirencta] = useState(false);
   const [consulta, setConsulta] = useState('');
+
+  const [modalVisibility, setModalVisibility] = useState(false);
+
+  const toggle = () => setModalVisibility(!modalVisibility);
 
   const nameValid = useValidation(name, /^[a-zA-Z]{2,30}$/);
   const lastNameValid = useValidation(lastName, /^[a-zA-Z]{2,30}$/);
@@ -47,6 +55,19 @@ export default function Index() {
         <title>Proyecto KUNAN</title>
       </Head>
 
+      <Modal isOpen={modalVisibility}>
+        <ModalHeader toggle={toggle}>Consulta Existente</ModalHeader>
+        <ModalBody>Ya hay una consulta registrada con su email. ¿Desea editarla?</ModalBody>
+        <ModalFooter>
+          <Button color='primary' onClick={toggle}>
+            Editar
+          </Button>{' '}
+          <Button color='secondary' onClick={toggle}>
+            No
+          </Button>
+        </ModalFooter>
+      </Modal>
+
       <div className='h-25 border-bottom border-dark'>
         <div className='row p-3 justify-content-between'>
           <div className='col-3 h-screen-10'>
@@ -63,7 +84,14 @@ export default function Index() {
       </div>
 
       <form className='row gap-4 p-4' onSubmit={handlerSubmit}>
-        <div className='row justify-content-center m-0 p-0'>
+        <div className='col-6 d-flex justify-content-start gap-4'>
+          <h1 className='display-6 m-0'>Añada su consulta</h1>
+          <button type='submit' className='btn btn-primary h-100' style={{ aspectRatio: '1/1' }}>
+            <FontAwesomeIcon icon={faPen} />
+          </button>
+        </div>
+
+        <div className='row m-0 p-0'>
           <div className='col-6  '>
             <label htmlFor='nombre'>Nombre:</label>
             <input type='text' className={`form-control ${nameValid ? 'is-valid' : 'is-invalid'}`} id='nombre' placeholder='Ingrese su nombre' aria-label='Ingrese su nombre' onChange={(e) => setName(e.target.value)} />
