@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { editConsultObjState } from '../lib/atoms';
 import Form from '../components/Form';
+import SpeakerSwitch from '../components/SpeakerSwitch';
 
 export default function Index() {
   const router = useRouter();
@@ -62,10 +63,16 @@ export default function Index() {
           </Button>
         </ModalFooter>
       </Modal>
-
-      <div className='col-6 d-flex justify-content-start gap-4 p-4'>
-        <h1 className='display-6 m-0'>Añadir una consulta</h1>
+      
+      <div className='d-flex'>
+        <div className='col-6 d-flex justify-content-start gap-4 p-4'>
+          <h1 className='display-6 m-0'>Añadir una consulta</h1>
+        </div>
+        <div className='col-6 d-flex justify-content-end gap-4 p-4'>
+          <SpeakerSwitch/>
+        </div>
       </div>
+      
 
       <Form onSubmit={handlerSubmit} />
     </Main>
