@@ -3,10 +3,10 @@ import { useAPISession } from './useAPISession';
 
 export const usePotentialClient = () => {
   const session = useAPISession();
-  const [result, setResult] = useState('');
 
   const insert = useCallback(
-    (sendingData) => {
+    async (sendingData) => {
+      let finalResult = '';
       const requestOptions = {
         method: 'GET',
         headers: {
@@ -17,50 +17,44 @@ export const usePotentialClient = () => {
       };
 
       if (session && session.access_token) {
-        fetch(`https://devphp7.democrm.com.ar/crminstalacionpaquetes/Api/V8/module/Leads?fields[Leads]=first_name,last_name,email1,phone_work,phone_mobile,website,description&filter[operator]=and&filter[email1][eq]=${sendingData.email}`, requestOptions)
-          .then((response) => response.json())
-          .then((result) => {
-            console.log(result);
-            setResult(result);
-            if (result && result.data.length === 0) {
-              fetch('https://devphp7.democrm.com.ar/crminstalacionpaquetes/Api/V8/module', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${session.access_token}`,
+        let result = await fetch(`https://devphp7.democrm.com.ar/crminstalacionpaquetes/Api/V8/module/Leads?fields[Leads]=first_name,last_name,email1,phone_work,phone_mobile,website,description&filter[operator]=and&filter[email1][eq]=${sendingData.email}`, requestOptions);
+        result = await result.json();
+
+        finalResult = { ...result, message: 'La consulta ya existe', status: false };
+        if (result && result.data.length === 0) {
+          let result = await fetch('https://devphp7.democrm.com.ar/crminstalacionpaquetes/Api/V8/module', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${session.access_token}`,
+            },
+            body: JSON.stringify({
+              'data': {
+                'type': 'Leads',
+                'attributes': {
+                  'first_name': sendingData.name,
+                  'last_name': sendingData.lastName,
+                  'email1': sendingData.email,
+                  'phone_work': sendingData.phone,
+                  'website': sendingData.web,
+                  'description': sendingData.consulta,
                 },
-                body: JSON.stringify({
-                  'data': {
-                    'type': 'Leads',
-                    'attributes': {
-                      'first_name': sendingData.name,
-                      'last_name': sendingData.lastName,
-                      'email1': sendingData.email,
-                      'phone_work': sendingData.phone,
-                      'website': sendingData.web,
-                      'description': sendingData.consulta,
-                    },
-                  },
-                }),
-                redirect: 'follow',
-              })
-                .then((response) => response.text())
-                .then((result) => {
-                  return result;
-                })
-                .catch((error) => {
-                  return error;
-                });
-            }
-          })
-          .catch((error) => console.log('error', error));
+              },
+            }),
+            redirect: 'follow',
+          });
+          result = await result.json();
+          finalResult = { ...result, message: 'Consulta agregada con exito', status: true };
+        }
+        return finalResult;
       }
     },
     [session]
   );
 
   const update = useCallback(
-    (sendingData) => {
+    async (sendingData) => {
+      let finalResult = '';
       const requestOptions = {
         method: 'GET',
         headers: {
@@ -71,44 +65,40 @@ export const usePotentialClient = () => {
       };
 
       if (session && session.access_token) {
-        fetch(`https://devphp7.democrm.com.ar/crminstalacionpaquetes/Api/V8/module/Leads?fields[Leads]=first_name,last_name,email1,phone_work,phone_mobile,website,description&filter[operator]=and&filter[email1][eq]=${sendingData.email}`, requestOptions)
-          .then((response) => response.json())
-          .then((result) => {
-            console.log(result);
-            setResult(result);
-            if (result && result.data.length === 0) {
-              fetch('https://devphp7.democrm.com.ar/crminstalacionpaquetes/Api/V8/module', {
-                method: 'PATCH',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${session.access_token}`,
+        let result = await fetch(`https://devphp7.democrm.com.ar/crminstalacionpaquetes/Api/V8/module/Leads?fields[Leads]=first_name,last_name,email1,phone_work,phone_mobile,website,description&filter[operator]=and&filter[email1][eq]=${sendingData.email}`, requestOptions);
+        result = await result.json();
+
+        finalResult = { ...result, message: 'La consulta ya existe', status: false };
+        console.log(result);
+        const uuid = result.data[0].id;
+        if (result && result.data[0] && result.data[0].id) {
+          let result = await fetch('https://devphp7.democrm.com.ar/crminstalacionpaquetes/Api/V8/module', {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${session.access_token}`,
+              'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE',
+              'Access-Control-Allow-Origin': '*',
+            },
+            body: JSON.stringify({
+              'data': {
+                'type': 'Leads',
+                'id': uuid,
+                'attributes': {
+                  'first_name': sendingData.name,
+                  'last_name': sendingData.lastName,
+                  'phone_work': sendingData.phone,
+                  'website': sendingData.web,
+                  'description': sendingData.consulta,
                 },
-                body: JSON.stringify({
-                  'data': {
-                    'type': 'Leads',
-                    'id': sendingData.id,
-                    'attributes': {
-                      'first_name': sendingData.name,
-                      'last_name': sendingData.lastName,
-                      'email1': sendingData.email,
-                      'phone_work': sendingData.phone,
-                      'website': sendingData.web,
-                      'description': sendingData.consulta,
-                    },
-                  },
-                }),
-                redirect: 'follow',
-              })
-                .then((response) => response.json())
-                .then((result) => {
-                  return result;
-                })
-                .catch((error) => {
-                  return error;
-                });
-            }
-          })
-          .catch((error) => console.log('error', error));
+              },
+            }),
+            redirect: 'follow',
+          });
+          result = await result.json();
+          finalResult = { ...result, message: 'Consulta agregada con exito', status: true };
+        }
+        return finalResult;
       }
     },
     [session]
