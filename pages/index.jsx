@@ -1,13 +1,6 @@
-import Head from 'next/head';
-import Image from 'next/future/image';
-import React, { useCallback, useState } from 'react';
-import useValidation from '../hooks/useValidation';
-import { useAPISession } from '../hooks/useAPISession';
+import React, { useState } from 'react';
 import { usePotentialClient } from '../hooks/usePotentialClient';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-regular-svg-icons';
-import { faPen } from '@fortawesome/free-solid-svg-icons';
 import Main from '../components/layouts/Main';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
@@ -23,7 +16,7 @@ export default function Index() {
   const [modalVisibility, setModalVisibility] = useState(false);
   const toggle = () => setModalVisibility(!modalVisibility);
 
-  const { insert } = usePotentialClient();
+  const { insert, eliminate } = usePotentialClient();
 
   const [editConsultObj, setEditConsultObj] = useRecoilState(editConsultObjState);
 
@@ -49,7 +42,7 @@ export default function Index() {
     <Main>
       <Modal isOpen={modalVisibility}>
         <ModalHeader toggle={toggle}>Consulta Existente</ModalHeader>
-        <ModalBody>Ya hay una consulta registrada con su email. ¿Desea editarla?</ModalBody>
+        <ModalBody>Ya hay una consulta registrada con su email. ¿Desea editarla o eliminarla?</ModalBody>
         <ModalFooter>
           <Button
             color='primary'
@@ -58,21 +51,25 @@ export default function Index() {
             }}>
             Editar
           </Button>{' '}
-          <Button color='secondary' onClick={toggle}>
-            No
+          <Button
+            color='secondary'
+            onClick={() => {
+              eliminate({ id: consultId });
+              toggle();
+            }}>
+            Eliminar
           </Button>
         </ModalFooter>
       </Modal>
-      
+
       <div className='d-flex'>
         <div className='col-6 d-flex justify-content-start gap-4 p-4'>
           <h1 className='display-6 m-0'>Añadir una consulta</h1>
         </div>
         <div className='col-6 d-flex justify-content-end gap-4 p-4'>
-          <SpeakerSwitch/>
+          <SpeakerSwitch />
         </div>
       </div>
-      
 
       <Form onSubmit={handlerSubmit} />
     </Main>

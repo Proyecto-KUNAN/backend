@@ -1,25 +1,26 @@
 import React, { useState } from 'react';
-import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faVolumeHigh } from '@fortawesome/free-solid-svg-icons';
-import { faVolumeMute } from '@fortawesome/free-solid-svg-icons';
-
-function Switch() {
-    console.log("Switch1");
-}
+import { FormGroup, Label, Input } from 'reactstrap';
+import { useRecoilState } from 'recoil';
+import { speakerState } from '../lib/atoms';
 
 export default function SpeakerSwitch() {
-    const [state, setState] = useState(true);
+  const [speaker, setSpeaker] = useRecoilState(speakerState);
 
-    return (
-        <>
-        {/* <a onClick={Switch} className='btn btn-link p-0 m-0'><FontAwesomeIcon icon={faVolumeHigh} id='icon-volume' className='w-100' height={44.25}/></a> */}
-        <FormGroup switch style={{ marginBlock: 'auto'}}>
-            <Label check>Speaker</Label>
-            <Input type="switch" role="switch" />
-            
-        </FormGroup>
-        
-        </>
-    )
+  return (
+    <>
+      {/* <a onClick={Switch} className='btn btn-link p-0 m-0'><FontAwesomeIcon icon={faVolumeHigh} id='icon-volume' className='w-100' height={44.25}/></a> */}
+      <FormGroup switch style={{ marginBlock: 'auto' }}>
+        <Label check>Speaker</Label>
+        <Input
+          type='switch'
+          role='switch'
+          defaultChecked={speaker}
+          onChange={(e) => {
+            console.log(e.target);
+            setSpeaker(e.target.checked);
+          }}
+        />
+      </FormGroup>
+    </>
+  );
 }
