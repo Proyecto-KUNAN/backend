@@ -16,6 +16,11 @@ export default function Index() {
   const [modalVisibility, setModalVisibility] = useState(false);
   const toggle = () => setModalVisibility(!modalVisibility);
 
+  const [notificationModalVisibility, setNotificationModalVisibility] = useState(false);
+  const toggleNotification = () => setNotificationModalVisibility(!notificationModalVisibility);
+
+  const [notificationMessage, setNotificationMessage] = useState('Consulta añadida con exito');
+
   const { insert, eliminate } = usePotentialClient();
 
   const [editConsultObj, setEditConsultObj] = useRecoilState(editConsultObjState);
@@ -35,6 +40,9 @@ export default function Index() {
       setEditConsultObj(final.data[0]);
       setConsultId(final.data[0].id);
       toggle();
+    } else {
+      setNotificationMessage('Consulta añadida con exito');
+      toggleNotification();
     }
   };
 
@@ -54,12 +62,19 @@ export default function Index() {
           <Button
             color='secondary'
             onClick={() => {
-              eliminate({ id: consultId });
               toggle();
+              eliminate({ id: consultId });
+              setNotificationMessage('Consulta eliminada con exito');
+              toggleNotification();
             }}>
             Eliminar
           </Button>
         </ModalFooter>
+      </Modal>
+
+      <Modal isOpen={notificationModalVisibility}>
+        <ModalHeader toggle={toggleNotification}>Notificaion</ModalHeader>
+        <ModalBody>{notificationMessage}</ModalBody>
       </Modal>
 
       <div className='d-flex'>
