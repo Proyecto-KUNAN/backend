@@ -20,7 +20,7 @@ export const usePotentialClient = () => {
         let result = await fetch(`https://devphp7.democrm.com.ar/crminstalacionpaquetes/Api/V8/module/Leads?fields[Leads]=first_name,last_name,email1,phone_work,phone_mobile,website,description&filter[operator]=and&filter[email1][eq]=${sendingData.email}`, requestOptions);
         result = await result.json();
 
-        finalResult = { ...result, message: 'La consulta ya existe', status: false };
+        finalResult = { ...result, message: 'La consulta ya existe', status: 0 };
         if (result && result.data.length === 0) {
           let result = await fetch('https://devphp7.democrm.com.ar/crminstalacionpaquetes/Api/V8/module', {
             method: 'POST',
@@ -44,7 +44,7 @@ export const usePotentialClient = () => {
             redirect: 'follow',
           });
           result = await result.json();
-          finalResult = { ...result, message: 'Consulta agregada con exito', status: true };
+          finalResult = { ...result, message: 'Consulta agregada con exito', status: 1 };
         }
         return finalResult;
       }
@@ -77,8 +77,8 @@ export const usePotentialClient = () => {
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${session.access_token}`,
-              'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE',
-              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Methods': 'PATCH, POST, GET, OPTIONS, PUT, DELETE',
+              'User-Agent': 'PostmanRuntime/7.29.2',
             },
             body: JSON.stringify({
               'data': {
@@ -96,6 +96,7 @@ export const usePotentialClient = () => {
             redirect: 'follow',
           });
           result = await result.json();
+          console.log(result);
           finalResult = { ...result, message: 'Consulta agregada con exito', status: true };
         }
         return finalResult;

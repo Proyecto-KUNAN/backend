@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { usePotentialClient } from '../hooks/usePotentialClient';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import Main from '../components/layouts/Main';
@@ -36,12 +36,15 @@ export default function Index() {
       consulta: data.consulta,
     });
     console.log(final);
-    if (final && !final.status) {
+    if (final && final.status === 0) {
       setEditConsultObj(final.data[0]);
       setConsultId(final.data[0].id);
       toggle();
-    } else {
+    } else if (final && final.status === 1) {
       setNotificationMessage('Consulta añadida con exito');
+      toggleNotification();
+    } else {
+      setNotificationMessage('Ha surgido un error al intentar añadir su consulta');
       toggleNotification();
     }
   };
