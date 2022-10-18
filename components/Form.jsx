@@ -19,7 +19,12 @@ export default function Form({ onSubmit = (data, isValid, event) => {}, initialD
   const webValid = useValidation(web, /^[a-zA-Z0-9\_\-]+\.[a-zA-Z-.]+$/);
   const consultaValid = useValidation(consulta, /^.[^\{\}\<\>\[\]\"\`]{0,400}$/);
 
-  const { createAttr } = useAudio('/audio.wav');
+  const { createAttr } = useAudio('/audio_test.wav');
+  const { createAttr: createAttrNombre } = useAudio('/audio_nombre.mp3');
+  const { createAttr: createAttrApellido } = useAudio('/audio_apellido.mp3');
+  const { createAttr: createAttrTelefono } = useAudio('/audio_telefono.mp3');
+  const { createAttr: createAttrEmail } = useAudio('/audio_email.mp3');
+  const { createAttr: createAttrSitioWeb } = useAudio('/audio_sitio_web.mp3');
 
   const handlerSubmit = (e) => {
     e.preventDefault();
@@ -36,14 +41,14 @@ export default function Form({ onSubmit = (data, isValid, event) => {}, initialD
   return (
     <form className='row gap-4 p-4' onSubmit={handlerSubmit}>
       <div className='row m-0 p-0'>
-        <div className='col-6  ' {...createAttr()}>
+        <div className='col-6  ' {...createAttrNombre()}>
           <label htmlFor='nombre'>Nombre:</label>
           <input type='text' className={`form-control ${nameValid ? 'is-valid' : 'is-invalid'}`} id='nombre' placeholder='Ingrese su nombre' aria-label='Ingrese su nombre' onChange={(e) => setName(e.target.value)} defaultValue={initialData.name} disabled={disabledInput.name} />
           <div className='valid-feedback'>Correcto!</div>
           <div className='invalid-feedback'>Ingrese su Nombre!</div>
         </div>
 
-        <div className='col-6' {...createAttr()}>
+        <div className='col-6' {...createAttrApellido()}>
           <label htmlFor='apellido'>Apellido:</label>
           <input type='text' className={`form-control ${lastNameValid ? 'is-valid' : 'is-invalid'}`} id='apellido' placeholder='Ingrese su apellido' aria-label='Ingrese su apellido' onChange={(e) => setLastName(e.target.value)} defaultValue={initialData.lastName} disabled={disabledInput.lastName} />
 
@@ -52,7 +57,7 @@ export default function Form({ onSubmit = (data, isValid, event) => {}, initialD
         </div>
       </div>
       <div className='row justify-content-center m-0 p-0'>
-        <div className='col-6' {...createAttr()}>
+        <div className='col-6' {...createAttrTelefono()}>
           <label htmlFor='telefono'>Telefono:</label>
           <input type='text' className={`form-control ${phoneValid ? 'is-valid' : 'is-invalid'}`} id='telefono' placeholder='Ingrese un telefono' aria-label='Ingrese un telefono' onChange={(e) => setPhone(e.target.value)} defaultValue={initialData.phone} disabled={disabledInput.phone} />
 
@@ -60,7 +65,7 @@ export default function Form({ onSubmit = (data, isValid, event) => {}, initialD
           <div className='invalid-feedback'>Ingrese un numero de telefono, sin simbolos!</div>
         </div>
 
-        <div className='form-group col-6 justify-content-center' {...createAttr()}>
+        <div className='form-group col-6 justify-content-center' {...createAttrEmail()}>
           <label htmlFor='exampleInputEmail1'>Email</label>
           <input type='email' className={`form-control ${emailValid ? 'is-valid' : 'is-invalid'}`} aria-describedby='emailHelp' placeholder='Ingrese un email' onChange={(e) => setEmail(e.target.value)} defaultValue={initialData.email} disabled={disabledInput.email} />
 
@@ -69,7 +74,7 @@ export default function Form({ onSubmit = (data, isValid, event) => {}, initialD
         </div>
       </div>
       <div className='row justify-content-center m-0 p-0'>
-        <div className='col-6' {...createAttr()}>
+        <div className='col-6' {...createAttrSitioWeb()}>
           <label htmlFor='web'>Sitio Web</label>
           <input type='text' className={`form-control ${webValid ? 'is-valid' : 'is-invalid'}`} id='web' placeholder='Ingrese su sitio web' aria-label='First name' onChange={(e) => setWeb(e.target.value)} defaultValue={initialData.web} disabled={disabledInput.web} />
 
