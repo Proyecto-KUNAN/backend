@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import useAudio from '../hooks/useAudio';
 import useValidation from '../hooks/useValidation';
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
 
 export default function Form({ onSubmit = (data, isValid, event) => {}, initialData = { name: '', lastName: '', email: '', phone: '', web: '', industry: 0, ventaIndirencta: false, consulta: '' }, disabledInput = { name: false, lastName: false, email: false, phone: false, web: false, industry: false, ventaIndirencta: false, consulta: false }, focus = true }) {
   const [name, setName] = useState(initialData.name);
@@ -19,12 +21,12 @@ export default function Form({ onSubmit = (data, isValid, event) => {}, initialD
   const webValid = useValidation(web, /^[a-zA-Z0-9\_\-]+\.[a-zA-Z-.]+$/);
   const consultaValid = useValidation(consulta, /^.[^\{\}\<\>\[\]\"\`]{0,400}$/);
 
-  const { createAttr } = useAudio('/audio_test.wav');
-  const { createAttr: createAttrNombre } = useAudio('/audio_nombre.mp3');
-  const { createAttr: createAttrApellido } = useAudio('/audio_apellido.mp3');
-  const { createAttr: createAttrTelefono } = useAudio('/audio_telefono.mp3');
-  const { createAttr: createAttrEmail } = useAudio('/audio_email.mp3');
-  const { createAttr: createAttrSitioWeb } = useAudio('/audio_sitio_web.mp3');
+  const { createAttr } = useAudio(`${publicRuntimeConfig.basePath}/audio_test.wav`);
+  const { createAttr: createAttrNombre } = useAudio(`${publicRuntimeConfig.basePath}/audio_nombre.mp3`);
+  const { createAttr: createAttrApellido } = useAudio(`${publicRuntimeConfig.basePath}/audio_apellido.mp3`);
+  const { createAttr: createAttrTelefono } = useAudio(`${publicRuntimeConfig.basePath}/audio_telefono.mp3`);
+  const { createAttr: createAttrEmail } = useAudio(`${publicRuntimeConfig.basePath}/audio_email.mp3`);
+  const { createAttr: createAttrSitioWeb } = useAudio(`${publicRuntimeConfig.basePath}/audio_sitio_web.mp3`);
 
   const handlerSubmit = (e) => {
     e.preventDefault();
